@@ -1,11 +1,10 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { HiOutlineEnvelope, HiOutlinePhone } from "react-icons/hi2";
+import { HiOutlineEnvelope } from "react-icons/hi2";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { contactLinks, footerCopy } from "../data/portfolio";
 
 const iconMap = {
   email: HiOutlineEnvelope,
-  phone: HiOutlinePhone,
   github: FaGithub,
   linkedin: FaLinkedinIn,
 };
@@ -39,8 +38,8 @@ export default function Contact() {
           initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.08 }}
-          className="mx-auto mt-12 grid max-w-4xl gap-4 sm:grid-cols-2"
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.12 }}
+          className="mx-auto mt-12 grid max-w-5xl gap-4 md:grid-cols-3"
         >
           {contactLinks.map((contact, index) => {
             const Icon = iconMap[contact.icon];
@@ -60,7 +59,7 @@ export default function Contact() {
                   delay: index * 0.05,
                 }}
                 whileHover={reduceMotion ? undefined : { y: -3 }}
-                className="group flex items-center gap-4 rounded-xl px-8 py-6 text-left"
+                className="group flex h-full items-center gap-4 rounded-xl px-7 py-6 text-left"
                 style={{
                   background: "var(--surface)",
                   border: "1px solid var(--border)",
@@ -81,7 +80,7 @@ export default function Contact() {
                 data-cursor-hover
               >
                 <motion.div
-                  className="flex h-14 w-14 items-center justify-center rounded-xl"
+                  className="flex h-12 w-12 items-center justify-center rounded-xl"
                   style={{
                     background: "rgba(16,185,129,0.12)",
                     color: "var(--accent-light)",
@@ -92,7 +91,7 @@ export default function Contact() {
                   <Icon className="h-6 w-6" aria-hidden="true" />
                 </motion.div>
 
-                <div>
+                <div className="min-w-0">
                   <p
                     className="text-xs uppercase tracking-[0.2em]"
                     style={{
@@ -103,7 +102,7 @@ export default function Contact() {
                     {contact.label}
                   </p>
                   <p
-                    className="mt-3 text-base sm:text-lg"
+                    className="mt-2 break-all text-base sm:text-lg"
                     style={{ color: "var(--text-primary)" }}
                   >
                     {contact.value}

@@ -34,11 +34,11 @@ const passingPlanets = [
 ];
 
 const lockStages = [
-  { at: 4.8, text: "SIGNAL DETECTED" },
-  { at: 5.3, text: "TRIANGULATING..." },
-  { at: 5.8, text: "SOURCE CONFIRMED" },
-  { at: 6.2, text: "LOCKING TARGET" },
-  { at: 6.7, text: "TARGET LOCKED +" },
+  { at: 2.05, text: "SIGNAL DETECTED" },
+  { at: 2.4, text: "TRIANGULATING..." },
+  { at: 2.75, text: "SOURCE CONFIRMED" },
+  { at: 3.05, text: "LOCKING TARGET" },
+  { at: 3.35, text: "TARGET LOCKED +" },
 ];
 
 const smoothstep = (edge0, edge1, value) => {
@@ -64,14 +64,14 @@ const createStar = () => {
 const createStars = () => Array.from({ length: STAR_COUNT }, createStar);
 
 const getSpeed = (timeSeconds) => {
-  if (timeSeconds < 0.3) {
-    return lerp(0.002, 0.028, cubicIn(timeSeconds / 0.3));
+  if (timeSeconds < 0.25) {
+    return lerp(0.002, 0.03, cubicIn(timeSeconds / 0.25));
   }
-  if (timeSeconds < 4) {
-    return 0.028;
+  if (timeSeconds < 1.8) {
+    return 0.03;
   }
-  if (timeSeconds < 5.5) {
-    return lerp(0.028, 0.003, cubicOut((timeSeconds - 4) / 1.5));
+  if (timeSeconds < 3.8) {
+    return lerp(0.03, 0.003, cubicOut((timeSeconds - 1.8) / 2));
   }
   return 0.003;
 };
@@ -312,13 +312,13 @@ export default function LoadingScreen({ onComplete = () => {} }) {
     };
 
     const drawDestinationPlanet = (timeSeconds) => {
-      if (timeSeconds < 4) return { radius: 8, cx: 0, cy: 0 };
+      if (timeSeconds < 1.15) return { radius: 8, cx: 0, cy: 0, progress: 0 };
 
       const { width, height } = sizeRef.current;
       const cx = width * 0.5;
       const cy = height * 0.5;
-      const growth = clamp01((timeSeconds - 4) / 4);
-      const approachCurve = growth ** 3.4;
+      const growth = clamp01((timeSeconds - 1.15) / 3.05);
+      const approachCurve = growth ** 3.2;
       const radius = lerp(8, 280, approachCurve);
 
       const gradient = ctx.createRadialGradient(
@@ -380,15 +380,15 @@ export default function LoadingScreen({ onComplete = () => {} }) {
         ctx.restore();
       }
 
-      return { radius, cx, cy };
+      return { radius, cx, cy, progress: growth };
     };
 
     const drawReticleAndHud = (timeSeconds, destination) => {
-      if (timeSeconds < 4) return;
+      if (timeSeconds < 1.15) return;
 
       const { radius, cx, cy } = destination;
 
-      const scanAlpha = clamp01((timeSeconds - 4) / 0.55);
+      const scanAlpha = clamp01((timeSeconds - 2.15) / 0.45);
       ctx.fillStyle = `rgba(16,185,129,${scanAlpha})`;
       ctx.font = '10px "JetBrains Mono", monospace';
       ctx.textAlign = "left";
@@ -396,8 +396,8 @@ export default function LoadingScreen({ onComplete = () => {} }) {
       ctx.fillText("ANOMALY DETECTED", 32, 66);
       ctx.fillText("COORDINATES: 14h 29m 43s +02 deg 03' 09\"", 32, 82);
 
-      if (timeSeconds >= 4.5) {
-        const reticleAlpha = clamp01((timeSeconds - 4.5) / 0.3);
+      if (timeSeconds >= 1.85) {
+        const reticleAlpha = clamp01((timeSeconds - 1.85) / 0.25);
         const r = radius + 18;
         const len = 16;
         const gap = 4;
@@ -428,9 +428,10 @@ export default function LoadingScreen({ onComplete = () => {} }) {
         ctx.lineTo(cx + r - gap, cy + r - gap - len);
         ctx.stroke();
 
-        if (timeSeconds >= 5) {
-          if (timeSeconds < 6.7) {
-            const spinBoost = 0.007 + smoothstep(5, 5.8, timeSeconds) * 0.004;
+        if (timeSeconds >= 2.2) {
+          if (timeSeconds < 4.4) {
+            const spinBoost =
+              0.007 + smoothstep(2.2, 2.95, timeSeconds) * 0.004;
             reticleRotationRef.current += spinBoost;
           }
           ctx.save();
@@ -447,9 +448,9 @@ export default function LoadingScreen({ onComplete = () => {} }) {
         }
       }
 
-      if (timeSeconds >= 4.8) {
-        const lockAlpha = clamp01((timeSeconds - 4.8) / 0.35);
-        const lockPulse = 0.86 + Math.sin(timeSeconds * 7.2) * 0.14;
+      if (timeSeconds >= 2.1) {
+        const lockAlpha = clamp01((timeSeconds - 2.1) / 0.3);
+        const lockPulse = 0.88 + Math.sin(timeSeconds * 7.2) * 0.12;
         ctx.fillStyle = `rgba(16,185,129,${lockAlpha})`;
         ctx.font = '10px "JetBrains Mono", monospace';
         ctx.textAlign = "left";
@@ -458,8 +459,8 @@ export default function LoadingScreen({ onComplete = () => {} }) {
         ctx.globalAlpha = 1;
       }
 
-      if (timeSeconds >= 5) {
-        const progress = cubicOut(clamp01((timeSeconds - 5) / 3));
+      if (timeSeconds >= 2.35) {
+        const progress = cubicOut(clamp01((timeSeconds - 2.35) / 2.2));
         const au = lerp(1.4, 0, progress);
         ctx.fillStyle = "rgba(107,124,114,0.6)";
         ctx.font = '9px "JetBrains Mono", monospace';
@@ -469,13 +470,13 @@ export default function LoadingScreen({ onComplete = () => {} }) {
     };
 
     const drawFlash = (timeSeconds) => {
-      if (timeSeconds < 7.8) return;
+      if (timeSeconds < 3.95) return;
 
       let flashAlpha = 0;
-      if (timeSeconds <= 7.92) {
-        flashAlpha = lerp(0, 0.85, (timeSeconds - 7.8) / 0.12);
-      } else if (timeSeconds <= 8.22) {
-        flashAlpha = lerp(0.85, 0, (timeSeconds - 7.92) / 0.3);
+      if (timeSeconds <= 4.08) {
+        flashAlpha = lerp(0, 0.85, (timeSeconds - 3.95) / 0.13);
+      } else if (timeSeconds <= 4.42) {
+        flashAlpha = lerp(0.85, 0, (timeSeconds - 4.08) / 0.34);
       }
 
       if (flashAlpha > 0) {
@@ -521,12 +522,12 @@ export default function LoadingScreen({ onComplete = () => {} }) {
       drawReticleAndHud(timeSeconds, destination);
       drawFlash(timeSeconds);
 
-      if (timeSeconds >= 7 && !phaseRef.current.overlay) {
+      if (destination.progress >= 0.72 && !phaseRef.current.overlay) {
         phaseRef.current.overlay = true;
         setOverlayVisible(true);
       }
 
-      if (timeSeconds >= 7.8 && !phaseRef.current.exiting) {
+      if (destination.progress >= 0.98 && !phaseRef.current.exiting) {
         phaseRef.current.exiting = true;
         setExiting(true);
       }
@@ -546,7 +547,7 @@ export default function LoadingScreen({ onComplete = () => {} }) {
     <motion.div
       initial={{ opacity: 1, scale: 1 }}
       animate={exiting ? { opacity: 0, scale: 1.04 } : { opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5, ease: "easeIn" }}
+      transition={{ duration: 0.35, ease: "easeIn" }}
       onAnimationComplete={() => {
         if (exiting && !completeOnceRef.current) {
           completeOnceRef.current = true;

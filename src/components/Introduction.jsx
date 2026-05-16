@@ -1,7 +1,9 @@
-import { motion } from "framer-motion";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { motion, useReducedMotion } from "framer-motion";
+import { FaDownload, FaGithub, FaLinkedinIn } from "react-icons/fa";
 
 export default function Introduction() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section
       id="home"
@@ -89,6 +91,38 @@ export default function Introduction() {
                 <span>LinkedIn</span>
               </a>
             </div>
+
+            <motion.a
+              href="/resume.pdf"
+              download
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
+              whileHover={reduceMotion ? undefined : { y: -2 }}
+              className="mt-8 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] transition-transform duration-200"
+              style={{
+                background: "linear-gradient(135deg,#16c784,#059669)",
+                border: "1px solid rgba(16,185,129,0.45)",
+                color: "#ffffff",
+                boxShadow: "0 14px 40px rgba(16,185,129,0.22)",
+                fontFamily: "JetBrains Mono, monospace",
+              }}
+              data-cursor-hover
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform =
+                  "translateY(-4px) scale(1.02)";
+                e.currentTarget.style.boxShadow =
+                  "0 18px 50px rgba(16,185,129,0.3)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0px)";
+                e.currentTarget.style.boxShadow =
+                  "0 14px 40px rgba(16,185,129,0.22)";
+              }}
+            >
+              <FaDownload className="h-3.5 w-3.5" aria-hidden="true" />
+              Resume
+            </motion.a>
           </motion.div>
 
           <motion.div

@@ -49,6 +49,15 @@ button,
   cursor: pointer !important;
 }
 
+/* Hide scrollbar for the conversation panel */
+.conversation-scroll::-webkit-scrollbar {
+  display: none;
+}
+.conversation-scroll {
+  -ms-overflow-style: none;   /* IE/Edge */
+  scrollbar-width: none;      /* Firefox */
+}
+
 ::selection {
   background: rgba(16, 185, 129, 0.25);
   color: #ffffff;

@@ -77,7 +77,7 @@ export default function CustomCursor() {
         height: size,
         borderRadius: "50%",
         backgroundColor: "white",
-        mixBlendMode: "difference",
+        mixBlendMode: "exclusion",
         pointerEvents: "none",
         zIndex: 9999,
       }}

@@ -1,151 +1,8 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { AiOutlineAudio } from "react-icons/ai";
+import { FaGithub } from "react-icons/fa";
 import { projects } from "../data/portfolio";
-
-function VoiceWaveAnimation() {
-  const rings = [0, 1, 2, 3];
-  const bars = [8, 18, 12, 28, 16, 34, 20, 40, 18, 30, 14, 24];
-
-  return (
-    <div className="relative flex h-full min-h-[320px] items-center justify-center overflow-hidden rounded-[16px] bg-[var(--surface)]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.08),transparent_55%)]" />
-      <div className="relative flex flex-col items-center justify-center gap-5">
-        <div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-[var(--border-hover)] bg-[rgba(6,10,7,0.95)]">
-          <AiOutlineAudio className="h-12 w-12 text-[var(--accent)]" />
-          {rings.map((ring) => (
-            <motion.span
-              key={ring}
-              className="absolute rounded-full border border-[rgba(16,185,129,0.45)]"
-              initial={{ scale: 0.5, opacity: 0.8 }}
-              animate={{ scale: 2.5, opacity: 0 }}
-              transition={{
-                duration: 2.4,
-                repeat: Infinity,
-                ease: "easeOut",
-                delay: ring * 0.6,
-              }}
-              style={{ width: 80, height: 80 }}
-            />
-          ))}
-        </div>
-
-        <div className="flex h-14 items-end gap-1.5">
-          {bars.map((bar, index) => (
-            <motion.span
-              key={index}
-              className="w-2 rounded-full bg-[var(--accent)]"
-              animate={{ height: [8, bar, 8] }}
-              transition={{
-                duration: 1.1,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: index * 0.08,
-              }}
-            />
-          ))}
-        </div>
-
-        <p className="mono text-xs text-[var(--text-muted)]">
-          AI Voice Interview
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function MessageFlowAnimation() {
-  const status = ["202 Accepted", "Queued", "Persisted"];
-
-  return (
-    <div className="relative flex h-full min-h-[320px] items-center justify-center overflow-hidden rounded-[16px] bg-[var(--surface)] px-4 py-8">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.08),transparent_60%)]" />
-      <div className="relative w-full max-w-[420px]">
-        <div className="flex items-start justify-between gap-3">
-          {[
-            { label: "API", x: 0 },
-            { label: "RabbitMQ", x: 0 },
-            { label: "MySQL", x: 0 },
-          ].map((node, index) => (
-            <div key={node.label} className="flex flex-col items-center gap-3">
-              <div
-                className="rounded-lg px-4 py-2 text-xs"
-                style={{
-                  fontFamily: "JetBrains Mono, monospace",
-                  border: "1px solid var(--border-hover)",
-                  background: "rgba(6,10,7,0.9)",
-                  color: "var(--text-primary)",
-                }}
-              >
-                {node.label}
-              </div>
-              <div
-                className="flex items-center gap-2 text-[0.65rem]"
-                style={{
-                  fontFamily: "JetBrains Mono, monospace",
-                  color: "var(--text-muted)",
-                }}
-              >
-                <motion.span
-                  className="h-2 w-2 rounded-full bg-[var(--accent)]"
-                  animate={{ opacity: [0.25, 1, 0.25] }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    delay: index * 0.3,
-                  }}
-                />
-                <span>{status[index]}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="relative mt-10 h-24">
-          <div className="absolute left-[18%] right-[18%] top-1/2 h-px -translate-y-1/2 bg-[rgba(255,255,255,0.12)]" />
-          <motion.span
-            className="absolute top-1/2 h-1.5 w-1.5 rounded-sm bg-[var(--accent)]"
-            animate={{ x: [0, 112, 112, 284], opacity: [0, 1, 1, 0] }}
-            transition={{
-              duration: 2.4,
-              repeat: Infinity,
-              repeatDelay: 0.8,
-              ease: "easeInOut",
-            }}
-            style={{ left: "18%", marginTop: "-3px" }}
-          />
-          <motion.span
-            className="absolute top-1/2 h-1.5 w-1.5 rounded-sm bg-[var(--accent)]"
-            animate={{ x: [0, 112, 112, 284], opacity: [0, 1, 1, 0] }}
-            transition={{
-              duration: 2.4,
-              repeat: Infinity,
-              repeatDelay: 0.8,
-              ease: "easeInOut",
-              delay: 0.8,
-            }}
-            style={{ left: "18%", marginTop: "-3px" }}
-          />
-          <motion.span
-            className="absolute top-1/2 h-1.5 w-1.5 rounded-sm bg-[var(--accent)]"
-            animate={{ x: [0, 112, 112, 284], opacity: [0, 1, 1, 0] }}
-            transition={{
-              duration: 2.4,
-              repeat: Infinity,
-              repeatDelay: 0.8,
-              ease: "easeInOut",
-              delay: 1.6,
-            }}
-            style={{ left: "18%", marginTop: "-3px" }}
-          />
-        </div>
-
-        <p className="mono text-center text-xs text-[var(--text-muted)]">
-          Event-Driven Architecture
-        </p>
-      </div>
-    </div>
-  );
-}
+import ConversationFeedPanel from "./animations/ConversationFeedPanel";
+import QueueDepthPanel from "./animations/QueueDepthPanel";
 
 export default function Projects() {
   const reduceMotion = useReducedMotion();
@@ -160,7 +17,6 @@ export default function Projects() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mb-12"
         >
-          <p className="section-label">(03)</p>
           <h2
             className="mt-4 text-5xl font-bold tracking-tight sm:text-6xl"
             style={{
@@ -179,7 +35,7 @@ export default function Projects() {
               initial={{ opacity: 0, y: 48 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-80px" }}
               whileHover={
                 reduceMotion
                   ? undefined
@@ -228,19 +84,6 @@ export default function Projects() {
                       {project.description}
                     </p>
 
-                    <ul className="mt-6 space-y-3">
-                      {project.detail.slice(0, 4).map((item) => (
-                        <li
-                          key={item}
-                          className="flex gap-3 text-sm leading-7 sm:text-[0.96rem]"
-                          style={{ color: "var(--text-muted)" }}
-                        >
-                          <span style={{ color: "var(--accent)" }}>▸</span>
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-
                     <div className="mt-6 flex flex-wrap gap-2">
                       {project.stack.map((tech) => (
                         <span
@@ -258,20 +101,70 @@ export default function Projects() {
                         </span>
                       ))}
                     </div>
+
+                    {project.repoUrl ? (
+                      <a
+                        href={project.repoUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs transition-colors duration-200"
+                        style={{
+                          borderColor: "var(--border)",
+                          background: "var(--surface)",
+                          color: "var(--text-primary)",
+                          fontFamily: "JetBrains Mono, monospace",
+                        }}
+                        data-cursor-hover
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor =
+                            "var(--border-hover)";
+                          e.currentTarget.style.color = "var(--accent)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = "var(--border)";
+                          e.currentTarget.style.color = "var(--text-primary)";
+                        }}
+                      >
+                        <FaGithub className="h-4 w-4" aria-hidden="true" />
+                        <span>View Repo</span>
+                      </a>
+                    ) : null}
                   </div>
                 </div>
 
-                <motion.div
-                  whileHover={reduceMotion ? undefined : { scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 240, damping: 22 }}
-                  className="rounded-[16px] border border-[var(--border)] bg-[var(--surface)] p-4"
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 12,
+                    borderRadius: "16px",
+                    border: "1px solid var(--border)",
+                    background: "var(--surface)",
+                    overflow: "hidden",
+                    padding: 20,
+                    height: "100%",
+                  }}
                 >
-                  {project.animationType === "voice-wave" ? (
-                    <VoiceWaveAnimation />
+                  {project.id === "01" ? (
+                    <div
+                      style={{
+                        height: "360px",
+                        minHeight: "360px",
+                        maxHeight: "360px",
+                        borderRadius: "16px",
+                        border: "1px solid var(--border)",
+                        background: "var(--surface)",
+                        padding: "20px",
+                        overflow: "hidden",
+                        flexShrink: 0,
+                      }}
+                    >
+                      <ConversationFeedPanel />
+                    </div>
                   ) : (
-                    <MessageFlowAnimation />
+                    <QueueDepthPanel />
                   )}
-                </motion.div>
+                </div>
               </div>
             </motion.article>
           ))}

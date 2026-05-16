@@ -1,43 +1,126 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
-import { techStack } from "../data/portfolio";
-
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.06,
-    },
-  },
-};
+import { techStackGroups } from "../data/portfolio";
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 32 },
-  show: {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
+    transition: { duration: 0.4, ease: "easeOut" },
   },
 };
 
-const rowSizes = [6, 6, 5, 4, 3, 2];
+function TechCard({ tech }) {
+  const [hovered, setHovered] = useState("");
+  const reduceMotion = useReducedMotion();
+  const Icon = tech.icon;
+  const isHover = hovered === tech.name;
 
-function splitRows(items, sizes) {
-  let cursor = 0;
-  return sizes.map((size) => {
-    const row = items.slice(cursor, cursor + size);
-    cursor += size;
-    return row;
-  });
+  return (
+    <motion.article
+      variants={cardVariants}
+      whileHover={reduceMotion ? undefined : { y: -5 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      onMouseEnter={() => setHovered(tech.name)}
+      onMouseLeave={() => setHovered("")}
+      className="relative flex h-[150px] w-[130px] select-none flex-col items-center justify-center gap-3 rounded-xl"
+      style={{
+        background: "var(--surface)",
+        border: `1px solid ${isHover ? "var(--border-hover)" : "var(--border)"}`,
+      }}
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 4 }}
+        animate={isHover ? { opacity: 1, y: 0 } : { opacity: 0, y: 4 }}
+        transition={{ duration: 0.15 }}
+        className="pointer-events-none absolute"
+        style={{
+          bottom: "calc(100% + 8px)",
+          background: "rgba(12,17,13,0.9)",
+          border: "1px solid var(--border-hover)",
+          backdropFilter: "blur(8px)",
+          padding: "4px 12px",
+          borderRadius: "20px",
+          fontFamily: "JetBrains Mono, monospace",
+          fontSize: "0.65rem",
+          color: "var(--text-primary)",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {tech.name}
+      </motion.div>
+
+      <Icon
+        className="h-11 w-11"
+        style={{
+          color: isHover ? tech.color : "#ffffff",
+          filter: isHover ? "none" : "grayscale(1) brightness(2)",
+          transition: "filter 250ms ease, color 250ms ease",
+        }}
+      />
+      <p
+        className="text-center text-[0.6rem] uppercase"
+        style={{
+          fontFamily: "JetBrains Mono, monospace",
+          letterSpacing: "0.12em",
+          color: "var(--text-muted)",
+        }}
+      >
+        {tech.name}
+      </p>
+    </motion.article>
+  );
 }
 
 export default function TechStack() {
-  const reduceMotion = useReducedMotion();
-  const [hovered, setHovered] = useState("");
-  const rows = splitRows(techStack, rowSizes);
-
   return (
     <section id="skills" className="section-shell">
+      <style>{`
+        .category-label {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10px;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: var(--accent);
+          margin-bottom: 14px;
+          padding-left: 2px;
+          position: relative;
+        }
+
+        .category-label::before {
+          content: '';
+          display: inline-block;
+          width: 20px;
+          height: 1px;
+          background: var(--accent);
+          margin-right: 10px;
+          vertical-align: middle;
+          opacity: 0.6;
+        }
+
+        .category-grid {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-bottom: 36px;
+        }
+
+        .tech-category-block {
+          margin-bottom: 8px;
+        }
+
+        .tech-category-block:last-child {
+          margin-bottom: 0;
+        }
+
+        .tech-grid-container {
+          max-width: 900px;
+          margin: 0 auto;
+          padding: 0 24px;
+        }
+      `}</style>
+
       <div className="page-container">
         <motion.div
           initial={{ opacity: 0, y: 32 }}
@@ -58,131 +141,37 @@ export default function TechStack() {
           </h2>
         </motion.div>
 
-        <div className="hidden space-y-3 md:block">
-          {rows.map((row, rowIndex) => (
+        <div className="tech-grid-container">
+          {techStackGroups.map((group, groupIndex) => (
             <motion.div
-              key={`row-${rowIndex}`}
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="show"
+              key={`${group.category}-${groupIndex}`}
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              className="flex justify-center gap-3"
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="tech-category-block"
             >
-              {row.map((tech) => {
-                const Icon = tech.icon;
-                const isHover = hovered === tech.name;
+              <div className="category-label">{group.category}</div>
 
-                return (
-                  <motion.article
-                    key={tech.name}
-                    variants={cardVariants}
-                    whileHover={reduceMotion ? undefined : { y: -5 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                    onMouseEnter={() => setHovered(tech.name)}
-                    onMouseLeave={() => setHovered("")}
-                    className="relative flex h-[150px] w-[130px] select-none flex-col items-center justify-center gap-3 rounded-xl"
-                    style={{
-                      background: "var(--surface)",
-                      border: `1px solid ${isHover ? "var(--border-hover)" : "var(--border)"}`,
-                    }}
-                  >
-                    <motion.div
-                      initial={{ opacity: 0, y: 4 }}
-                      animate={
-                        isHover ? { opacity: 1, y: 0 } : { opacity: 0, y: 4 }
-                      }
-                      transition={{ duration: 0.15 }}
-                      className="pointer-events-none absolute"
-                      style={{
-                        bottom: "calc(100% + 8px)",
-                        background: "rgba(12,17,13,0.9)",
-                        border: "1px solid var(--border-hover)",
-                        backdropFilter: "blur(8px)",
-                        padding: "4px 12px",
-                        borderRadius: "20px",
-                        fontFamily: "JetBrains Mono, monospace",
-                        fontSize: "0.65rem",
-                        color: "var(--text-primary)",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {tech.name}
-                    </motion.div>
-
-                    <Icon
-                      className="h-11 w-11"
-                      style={{
-                        color: isHover ? tech.color : "#ffffff",
-                        filter: isHover ? "none" : "grayscale(1) brightness(2)",
-                        transition: "filter 250ms ease, color 250ms ease",
-                      }}
-                    />
-                    <p
-                      className="text-center text-[0.6rem] uppercase"
-                      style={{
-                        fontFamily: "JetBrains Mono, monospace",
-                        letterSpacing: "0.12em",
-                        color: "var(--text-muted)",
-                      }}
-                    >
-                      {tech.name}
-                    </p>
-                  </motion.article>
-                );
-              })}
+              <motion.div
+                className="category-grid"
+                variants={{
+                  hidden: { transition: { staggerChildren: 0 } },
+                  visible: { transition: { staggerChildren: 0.05 } },
+                }}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-60px" }}
+              >
+                {group.items.map((tech) => (
+                  <motion.div key={tech.name} variants={cardVariants}>
+                    <TechCard tech={tech} />
+                  </motion.div>
+                ))}
+              </motion.div>
             </motion.div>
           ))}
         </div>
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-60px" }}
-          className="grid grid-cols-2 gap-3 md:hidden"
-        >
-          {techStack.map((tech) => {
-            const Icon = tech.icon;
-            const isHover = hovered === tech.name;
-
-            return (
-              <motion.article
-                key={`${tech.name}-mobile`}
-                variants={cardVariants}
-                whileHover={reduceMotion ? undefined : { y: -5 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-                onMouseEnter={() => setHovered(tech.name)}
-                onMouseLeave={() => setHovered("")}
-                className="relative flex h-[150px] items-center justify-center rounded-xl"
-                style={{
-                  background: "var(--surface)",
-                  border: `1px solid ${isHover ? "var(--border-hover)" : "var(--border)"}`,
-                }}
-              >
-                <div className="flex flex-col items-center gap-3">
-                  <Icon
-                    className="h-11 w-11"
-                    style={{
-                      color: isHover ? tech.color : "#ffffff",
-                      filter: isHover ? "none" : "grayscale(1) brightness(2)",
-                      transition: "filter 250ms ease, color 250ms ease",
-                    }}
-                  />
-                  <p
-                    className="text-center text-[0.6rem] uppercase"
-                    style={{
-                      fontFamily: "JetBrains Mono, monospace",
-                      letterSpacing: "0.12em",
-                      color: "var(--text-muted)",
-                    }}
-                  >
-                    {tech.name}
-                  </p>
-                </div>
-              </motion.article>
-            );
-          })}
-        </motion.div>
       </div>
     </section>
   );

@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa";
 import {
   SiApachemaven,
+  SiApachekafka,
   SiC,
   SiCss,
   SiDart,
@@ -41,6 +42,7 @@ export const projects = [
   {
     id: "01",
     name: "Qlue v2",
+    repoUrl: "https://github.com/MouliSaiDeep/Qlue-v2",
     tagline: "AI-Powered Voice Interview Simulation Platform",
     description:
       "A cross-platform mobile and web application that simulates real-world technical and behavioral interviews using voice, NLP, and large language models. Upload your resume — the AI parses it and becomes your personalized voice interviewer, scoring every response across clarity, technical depth, and communication in real time.",
@@ -58,6 +60,7 @@ export const projects = [
   {
     id: "02",
     name: "Activity Tracker",
+    repoUrl: "https://github.com/MouliSaiDeep/user-activity-tracking-system",
     tagline: "Event-Driven User Activity Tracking System",
     description:
       "A production-grade distributed backend system that decouples high-volume event ingestion from database persistence using RabbitMQ as a message broker. The public API always responds in under 5ms — the database work happens asynchronously in the background, completely isolated from user-facing latency.",
@@ -74,33 +77,59 @@ export const projects = [
   },
 ];
 
-export const techStack = [
-  { name: "Java", icon: FaJava, color: "#f89820" },
-  { name: "Spring Boot", icon: SiSpringboot, color: "#6db33f" },
-  { name: "Flutter/Dart", icon: SiFlutter, color: "#54c5f8" },
-  { name: "Docker", icon: FaDocker, color: "#2496ed" },
-  { name: "JavaScript", icon: SiJavascript, color: "#f7df1e" },
-  { name: "TypeScript", icon: SiTypescript, color: "#3178c6" },
-  { name: "MySQL", icon: SiMysql, color: "#4479a1" },
-  { name: "PostgreSQL", icon: SiPostgresql, color: "#336791" },
-  { name: "RabbitMQ", icon: SiRabbitmq, color: "#ff6600" },
-  { name: "Redis", icon: SiRedis, color: "#dc382d" },
-  { name: "MongoDB", icon: SiMongodb, color: "#47a248" },
-  { name: "Node.js", icon: FaNodeJs, color: "#68a063" },
-  { name: "Express.js", icon: SiExpress, color: "#ffffff" },
-  { name: "React", icon: FaReact, color: "#61dafb" },
-  { name: "Prisma", icon: SiPrisma, color: "#5a67d8" },
-  { name: "Firebase", icon: SiFirebase, color: "#ffca28" },
-  { name: "Dart", icon: SiDart, color: "#0175c2" },
-  { name: "HTML", icon: SiHtml5, color: "#e34f26" },
-  { name: "CSS", icon: SiCss, color: "#1572b6" },
-  { name: "C", icon: SiC, color: "#a8b9cc" },
-  { name: "Maven", icon: SiApachemaven, color: "#c71a36" },
-  { name: "Git", icon: FaGit, color: "#f05032" },
-  { name: "GitHub", icon: FaGithub, color: "#ffffff" },
-  { name: "Postman", icon: SiPostman, color: "#ff6c37" },
-  { name: "SonarQube", icon: SiSonarqube, color: "#4e9bcd" },
-  { name: "Jenkins", icon: SiJenkins, color: "#d33833" },
+export const techStackGroups = [
+  {
+    category: "Languages",
+    items: [
+      { name: "Java", icon: FaJava, color: "#f89820" },
+      { name: "Dart", icon: SiDart, color: "#0175c2" },
+      { name: "JavaScript", icon: SiJavascript, color: "#f7df1e" },
+      { name: "TypeScript", icon: SiTypescript, color: "#3178c6" },
+      { name: "C", icon: SiC, color: "#a8b9cc" },
+      { name: "HTML", icon: SiHtml5, color: "#e34f26" },
+      { name: "CSS", icon: SiCss, color: "#1572b6" },
+    ],
+  },
+  {
+    category: "Frameworks & Runtimes",
+    items: [
+      { name: "Spring Boot", icon: SiSpringboot, color: "#6db33f" },
+      { name: "Flutter", icon: SiFlutter, color: "#54c5f8" },
+      { name: "Node.js", icon: FaNodeJs, color: "#68a063" },
+      { name: "Express.js", icon: SiExpress, color: "#ffffff" },
+      { name: "React", icon: FaReact, color: "#61dafb" },
+      { name: "Prisma", icon: SiPrisma, color: "#5a67d8" },
+    ],
+  },
+  {
+    category: "Databases",
+    items: [
+      { name: "MySQL", icon: SiMysql, color: "#4479a1" },
+      { name: "PostgreSQL", icon: SiPostgresql, color: "#336791" },
+      { name: "MongoDB", icon: SiMongodb, color: "#47a248" },
+      { name: "Redis", icon: SiRedis, color: "#dc382d" },
+      { name: "Firebase", icon: SiFirebase, color: "#ffca28" },
+    ],
+  },
+  {
+    category: "Message Brokers",
+    items: [
+      { name: "RabbitMQ", icon: SiRabbitmq, color: "#ff6600" },
+      { name: "Kafka", icon: SiApachekafka, color: "#ffffff" },
+    ],
+  },
+  {
+    category: "DevOps & Tools",
+    items: [
+      { name: "Docker", icon: FaDocker, color: "#2496ed" },
+      { name: "Maven", icon: SiApachemaven, color: "#c71a36" },
+      { name: "Git", icon: FaGit, color: "#f05032" },
+      { name: "GitHub", icon: FaGithub, color: "#ffffff" },
+      { name: "Postman", icon: SiPostman, color: "#ff6c37" },
+      { name: "SonarQube", icon: SiSonarqube, color: "#4e9bcd" },
+      { name: "Jenkins", icon: SiJenkins, color: "#d33833" },
+    ],
+  },
 ];
 
 export const contactLinks = [
@@ -109,12 +138,6 @@ export const contactLinks = [
     value: "moulisaideep.get@gmail.com",
     href: "mailto:moulisaideep.get@gmail.com",
     icon: "email",
-  },
-  {
-    label: "Phone",
-    value: "+91 97017 11887",
-    href: "tel:+919701711887",
-    icon: "phone",
   },
   {
     label: "GitHub",
@@ -130,4 +153,4 @@ export const contactLinks = [
   },
 ];
 
-export const footerCopy = "© 2025 Mouli Sai Deep · Built with React + Framer Motion";
+export const footerCopy = "© 2026 Mouli Sai Deep";

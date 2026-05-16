@@ -95,7 +95,7 @@ export default function Navbar({ activeSection }) {
             }}
             data-cursor-hover
           >
-            Contact
+            Reach Out
           </a>
 
           <button
