@@ -14,7 +14,7 @@ export default function Introduction() {
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="order-1 md:order-2 lg:order-1"
+            className="order-1 md:order-2 lg:order-1 lg:-ml-6"
           >
             <p
               className="mb-3 text-sm uppercase tracking-[0.14em]"

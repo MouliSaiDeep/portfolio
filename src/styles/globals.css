@@ -28,7 +28,7 @@ body {
   background: var(--bg);
   color: var(--text-primary);
   font-family: 'Inter', sans-serif;
-  cursor: none;
+  cursor: auto;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -39,7 +39,14 @@ body {
 }
 
 * {
-  cursor: none !important;
+  cursor: auto;
+}
+
+a,
+button,
+[role='button'],
+[data-cursor-hover] {
+  cursor: pointer !important;
 }
 
 ::selection {
