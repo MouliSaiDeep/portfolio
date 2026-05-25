@@ -11,12 +11,12 @@ export default function Introduction() {
       style={{ maxWidth: "100vw" }}
     >
       <div className="page-container relative z-[1]">
-        <div className="grid items-center gap-10 md:grid-cols-2 lg:grid-cols-[32%_38%_30%]">
+        <div className="grid items-center gap-10 md:grid-cols-2 lg:grid-cols-[1fr_auto_1fr]">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="order-1 md:order-2 lg:order-1 lg:-ml-6"
+            className="order-1 md:order-2 lg:order-1"
           >
             <p
               className="mb-3 text-sm uppercase tracking-[0.14em]"
@@ -143,7 +143,7 @@ export default function Introduction() {
               <img
                 src="/profile.png"
                 alt="Mouli Sai Deep"
-                className="h-[54vh] w-[min(80vw,420px)] object-cover object-top md:h-[70vh] md:w-[420px] lg:h-[85vh]"
+                className="h-[54vh] w-[min(80vw,420px)] object-cover object-top md:h-[70vh] md:w-[420px] lg:h-[80vh] lg:w-[380px] xl:h-[85vh] xl:w-[420px]"
                 style={{ boxShadow: "0 40px 120px rgba(16,185,129,0.2)" }}
               />
             </div>
@@ -153,7 +153,7 @@ export default function Introduction() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-            className="order-3 pr-[clamp(1rem,3vw,2rem)]"
+            className="order-3"
           >
             <div
               className="intro-stack-title leading-[0.95]"

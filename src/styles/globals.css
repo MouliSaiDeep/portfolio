@@ -184,3 +184,158 @@ button,
     font-size: clamp(1.8rem, 3vw, 3rem);
   }
 }
+
+/* ==========================================
+   Bento Grid Layout & Tech Card Density Fix
+   ========================================== */
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: 3fr 1.3fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "frameworks  brokers-db"
+    "languages   devops";
+  gap: 10px;
+  width: 100%;
+}
+
+.brokers-db-stack {
+  grid-area: brokers-db;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bento-tile {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  padding: 16px;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 300ms ease;
+}
+
+.bento-tile:hover {
+  border-color: var(--border-hover);
+}
+
+.bento-tile-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bento-tile-label::before {
+  content: '';
+  width: 16px;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.5;
+}
+
+.bento-tile-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Compact tech stack cards */
+.tech-card {
+  width: 72px;
+  height: 80px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 200ms ease, border-color 200ms ease;
+}
+
+/* Tile-specific styles and min-heights */
+.tile-frameworks {
+  grid-area: frameworks;
+  min-height: 180px;
+}
+
+.tile-brokers {
+  grid-area: brokers-db;
+  min-height: 120px;
+}
+
+.tile-databases {
+  grid-area: databases;
+  min-height: 120px;
+}
+
+.tile-languages {
+  grid-area: languages;
+  min-height: 160px;
+}
+
+.tile-devops {
+  grid-area: devops;
+  min-height: 160px;
+}
+
+/* Responsive Grid and Card Adapters */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .bento-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "frameworks frameworks"
+      "brokers-db databases"
+      "languages  devops";
+  }
+
+  .brokers-db-stack {
+    display: contents;
+  }
+}
+
+@media (max-width: 767px) {
+  .bento-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .brokers-db-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .tech-card {
+    width: 64px;
+    height: 72px;
+  }
+}
+
+/* ==========================================
+   Tab Gallery Custom Utilities
+   ========================================== */
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;   /* IE/Edge */
+  scrollbar-width: none;      /* Firefox */
+}
+
+
